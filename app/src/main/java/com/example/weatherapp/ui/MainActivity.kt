@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         //Nav controller
-        navController  = Navigation.findNavController(this, R.id.nav_host_fragment)
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
 
         //Set Bottom Navigation menu with nav controller
         bottom_nav.setupWithNavController(navController)
@@ -32,6 +32,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         // return super.onSupportNavigateUp()
-        return  NavigationUI.navigateUp(navController, null) //null for drawer layout
+        return NavigationUI.navigateUp(navController, null) //null for drawer layout
     }
 }

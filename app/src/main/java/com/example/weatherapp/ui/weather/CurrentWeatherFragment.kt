@@ -1,7 +1,9 @@
 package com.example.weatherapp.ui.weather
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,9 @@ import com.example.weatherapp.ApiInterface
 import com.example.weatherapp.R
 import com.example.weatherapp.adapter.WeatherAdapter
 import com.example.weatherapp.models.WeatherModel
+import com.example.weatherapp.network.ConnectivityInterceptor
+import com.example.weatherapp.network.ConnectivityInterceptorImpl
+import com.example.weatherapp.utils.NoConnectivityException
 import com.example.weatherapp.utils.nameOfCities
 import kotlinx.android.synthetic.main.current_weather_fragment.*
 import kotlinx.coroutines.CoroutineScope
@@ -21,11 +26,6 @@ import kotlinx.coroutines.launch
 
 
 class CurrentWeatherFragment : Fragment() {
-
-    //private var currentWeatherItems = MutableList
-
-
-    ///private var currentWeatherItems: MutableList<WeatherModel> = ArrayList()
 
     private var currentWeatherItems = arrayListOf<WeatherModel>()
 
@@ -50,8 +50,7 @@ class CurrentWeatherFragment : Fragment() {
         // TODO: Use the ViewModel
 
 
-
-        if(activity != null && isAdded) {
+        if (activity != null && isAdded) {
 
             setData()
 
@@ -61,9 +60,9 @@ class CurrentWeatherFragment : Fragment() {
 
         swipe_refresh_layout.setOnRefreshListener {
 
-            if(activity != null && isAdded) {
-            setData()
-            swipe_refresh_layout.isRefreshing = false
+            if (activity != null && isAdded) {
+                setData()
+                swipe_refresh_layout.isRefreshing = false
             }
         }
 
@@ -71,17 +70,28 @@ class CurrentWeatherFragment : Fragment() {
     }
 
 
+    @SuppressLint("UseRequireInsteadOfGet")
     private fun setData() {
-        val apiService = ApiInterface()
+
+        val apiService = ApiInterface(ConnectivityInterceptorImpl(this.context!!))
 
         GlobalScope.launch(Dispatchers.Main) {
 
+            try {
 
-            for (cityName in nameOfCities) {
-                val currentWeatherResponse = apiService.getCurrentWeather(cityName).await()
+                for (cityName in nameOfCities) {
+                    val currentWeatherResponse = apiService.getCurrentWeather(cityName).await()
 
-                currentWeatherItems.add(currentWeatherResponse)
+                    currentWeatherItems.add(currentWeatherResponse)
+                }
+
             }
+            catch (e: NoConnectivityException){
+                Log.e("Connectivity", "No Internet Connection", e)
+            }
+
+
+
             //val currentWeatherResponse = apiService.getCurrentWeather("London").await()
 
 

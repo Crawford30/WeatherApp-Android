@@ -2,6 +2,8 @@ package com.example.weatherapp
 
 import android.util.Log
 import com.example.weatherapp.models.WeatherModel
+import com.example.weatherapp.network.ConnectivityInterceptor
+import com.example.weatherapp.network.ConnectivityInterceptorImpl
 import com.example.weatherapp.utils.API_KEY
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
@@ -25,7 +27,7 @@ interface ApiInterface {
 
 
     companion object {
-        operator fun invoke():ApiInterface{
+        operator fun invoke(connectivityInterceptor: ConnectivityInterceptor):ApiInterface{
             val requestInterceptor = Interceptor { chain ->
                 val url = chain.request()
                     .url()
@@ -46,6 +48,7 @@ interface ApiInterface {
 
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(requestInterceptor)
+                .addInterceptor(connectivityInterceptor)
                 .build()
 
             //Api response thru retrofit
