@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginBottom="20dp"
+    android:minHeight="200dp"
+
+    app:cardCornerRadius="4dp"
+    app:cardElevation="10dp"
+    app:cardPreventCornerOverlap="false">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_bg"
+        android:minHeight="300dp"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/city_name"
+            android:layout_width="207dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:padding="5dp"
+            android:text="Nairobi, Kenya"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/date_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:text="Fri, 20-March-2022"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="@+id/city_name"
+            app:layout_constraintStart_toStartOf="@+id/city_name"
+            app:layout_constraintTop_toBottomOf="@+id/city_name" />
+
+        <TextView
+            android:id="@+id/time_tv"
+            android:layout_width="201dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:text="08:30AM"
+            android:textColor="#fff"
+            app:layout_constraintStart_toStartOf="@+id/date_tv"
+            app:layout_constraintTop_toBottomOf="@+id/date_tv" />
+
+        <TextView
+            android:id="@+id/temperature_tv"
+            android:layout_width="0dp"
+            android:layout_height="98dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="30 °C"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="@+id/time_tv"
+            app:layout_constraintTop_toBottomOf="@+id/time_tv" />
+
+        <ImageView
+            android:id="@+id/temp_icon"
+            android:layout_width="113dp"
+            android:layout_height="111dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
