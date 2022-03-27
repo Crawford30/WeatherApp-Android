@@ -12,6 +12,7 @@ import com.example.weatherapp.models.WeatherModel
 import kotlinx.android.synthetic.main.layout_weather_row.view.*
 import kotlin.collections.ArrayList
 import com.example.weatherapp.utils.epochToIso8601
+import java.util.*
 
 
 class WeatherAdapter(
@@ -88,8 +89,8 @@ class WeatherAdapter(
 
                     var resultList = ArrayList<WeatherModel>()
                     for (row in currentWeatherList) {
-                        if (row.name.toLowerCase()
-                                .contains(charSearch.toLowerCase())
+                        if (row.name.lowercase(Locale.getDefault())
+                                .contains(charSearch.lowercase(Locale.getDefault()))
                         ) {
 
                             resultList.add(row)
