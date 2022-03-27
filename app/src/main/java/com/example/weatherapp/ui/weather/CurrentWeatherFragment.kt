@@ -1,13 +1,13 @@
 package com.example.weatherapp.ui.weather
 
 import android.annotation.SuppressLint
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
@@ -16,12 +16,10 @@ import com.example.weatherapp.ApiInterface
 import com.example.weatherapp.adapter.WeatherAdapter
 import com.example.weatherapp.database.CurrentWeatherDatabase
 import com.example.weatherapp.models.WeatherModel
-import com.example.weatherapp.network.ConnectivityInterceptor
 import com.example.weatherapp.network.ConnectivityInterceptorImpl
 import com.example.weatherapp.utils.NoConnectivityException
 import com.example.weatherapp.utils.nameOfCities
 import kotlinx.android.synthetic.main.current_weather_fragment.*
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
@@ -138,41 +136,9 @@ class CurrentWeatherFragment : Fragment() {
 
             })
 
-            //val currentWeatherResponse = apiService.getCurrentWeather("London").await()
-
-
-//            current_weather_recycler.apply {
-//
-//                layoutManager = LinearLayoutManager(activity)
-//                setHasFixedSize(true)
-//
-////                val topSPacingDecoration = TopSpacingItemDecoration(20)
-////                addItemDecoration(topSPacingDecoration)
-//
-//                currentWeatherAdapter = WeatherAdapter(currentWeatherItems)
-//
-//
-//                adapter = currentWeatherAdapter
-//
-//
-//                ten_major_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//                    override fun onQueryTextSubmit(query: String?): Boolean {
-//                        return false
-//                    }
-//
-//                    override fun onQueryTextChange(newText: String?): Boolean {
-//                        tenMajorAdapter.filter.filter(newText)
-//                        return false
-//                    }
-//
-//                })
-//
-//
-//            }
-
-
         }
 
     }
+
 
 }
