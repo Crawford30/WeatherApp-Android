@@ -49,6 +49,8 @@ class WeatherAdapter(var currentWeatherList: ArrayList<WeatherModel>) :
 
             var stringDate: String = longDate.toString()
 
+
+
             var date = stringDate.substring(0, 11)
 
             var time = stringDate.substring(12, 20)
