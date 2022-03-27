@@ -10,9 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
 import com.example.weatherapp.ApiInterface
-import com.example.weatherapp.R
+
 import com.example.weatherapp.adapter.WeatherAdapter
+import com.example.weatherapp.database.CurrentWeatherDatabase
 import com.example.weatherapp.models.WeatherModel
 import com.example.weatherapp.network.ConnectivityInterceptor
 import com.example.weatherapp.network.ConnectivityInterceptorImpl
@@ -22,16 +24,23 @@ import kotlinx.android.synthetic.main.current_weather_fragment.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import androidx.recyclerview.widget.RecyclerView
+
+import com.example.weatherapp.R
 
 
 class CurrentWeatherFragment : Fragment() {
+
 
     private var currentWeatherItems = arrayListOf<WeatherModel>()
 
     lateinit var currentWeatherAdapter: WeatherAdapter
 
     companion object {
+
+        var database: CurrentWeatherDatabase? = null
         fun newInstance() = CurrentWeatherFragment()
     }
 
@@ -44,17 +53,32 @@ class CurrentWeatherFragment : Fragment() {
         return inflater.inflate(R.layout.current_weather_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CurrentWeatherViewModel::class.java)
-        // TODO: Use the ViewModel
-
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         if (activity != null && isAdded) {
 
             setData()
 
         }
+
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+
+        database = Room.databaseBuilder(
+            requireActivity().applicationContext, CurrentWeatherDatabase::class.java,
+            "forecast.db"
+        ).build()
+
+        val weatherDao = database!!.currentWeatherDao()
+
+
+        val allWeather: Flow<List<WeatherModel>> = weatherDao.getAllCurrentWeather()
+
+        Log.d("ALL", "${allWeather}")
+
 
 
 
@@ -85,30 +109,52 @@ class CurrentWeatherFragment : Fragment() {
                     currentWeatherItems.add(currentWeatherResponse)
                 }
 
-            }
-            catch (e: NoConnectivityException){
+            } catch (e: NoConnectivityException) {
                 Log.e("Connectivity", "No Internet Connection", e)
             }
 
 
+            val recyclerView: RecyclerView =
+                view!!.findViewById(R.id.current_weather_recycler)
+            var layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
+            recyclerView.layoutManager = layoutManager
+
+            val search = view!!.findViewById<SearchView>(R.id.weather_search)
+
+
+            // define an adapter
+            currentWeatherAdapter = WeatherAdapter(currentWeatherItems)
+            recyclerView.adapter = currentWeatherAdapter
+
+            search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    currentWeatherAdapter.filter.filter(newText)
+                    return false
+                }
+
+            })
 
             //val currentWeatherResponse = apiService.getCurrentWeather("London").await()
 
 
-            current_weather_recycler.apply {
-
-                layoutManager = LinearLayoutManager(activity)
-                setHasFixedSize(true)
-
-//                val topSPacingDecoration = TopSpacingItemDecoration(20)
-//                addItemDecoration(topSPacingDecoration)
-
-                currentWeatherAdapter = WeatherAdapter(currentWeatherItems)
-
-
-                adapter = currentWeatherAdapter
-
-
+//            current_weather_recycler.apply {
+//
+//                layoutManager = LinearLayoutManager(activity)
+//                setHasFixedSize(true)
+//
+////                val topSPacingDecoration = TopSpacingItemDecoration(20)
+////                addItemDecoration(topSPacingDecoration)
+//
+//                currentWeatherAdapter = WeatherAdapter(currentWeatherItems)
+//
+//
+//                adapter = currentWeatherAdapter
+//
+//
 //                ten_major_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 //                    override fun onQueryTextSubmit(query: String?): Boolean {
 //                        return false
@@ -120,9 +166,9 @@ class CurrentWeatherFragment : Fragment() {
 //                    }
 //
 //                })
-
-
-            }
+//
+//
+//            }
 
 
         }

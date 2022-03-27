@@ -4,6 +4,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -14,33 +16,50 @@ import kotlinx.android.synthetic.main.layout_weather_row.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import android.R.string
 
-class WeatherAdapter(private val currentWeatherList: ArrayList<WeatherModel>):RecyclerView.Adapter<CurrentWeatherVH>() {
+
+class WeatherAdapter(var currentWeatherList: ArrayList<WeatherModel>) :
+    RecyclerView.Adapter<CurrentWeatherVH>(), Filterable {
+
+    var currentWeatherFilteredList = ArrayList<WeatherModel>()
+
+
+    init {
+        currentWeatherFilteredList = currentWeatherList
+    }
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrentWeatherVH {
         val layoutInflater = LayoutInflater.from(parent?.context)
 
         val cellForRow = layoutInflater.inflate(R.layout.layout_weather_row, parent, false)
 
-        return  CurrentWeatherVH(cellForRow)
+        return CurrentWeatherVH(cellForRow)
     }
 
     override fun onBindViewHolder(holder: CurrentWeatherVH, position: Int) {
 
-        var currentWeatherData = currentWeatherList[position]
+        var currentWeatherData = currentWeatherFilteredList[position]
 
-        if(currentWeatherData != null){
-
-
+        if (currentWeatherData != null) {
 
             holder?.view?.city_name.text = currentWeatherData.name
+            val longDate = epochToIso8601(currentWeatherData.dt.toLong())
 
-            holder?.view.date_tv.text = epochToIso8601(currentWeatherData.dt.toLong())
+            var stringDate: String = longDate.toString()
 
+            var date = stringDate.substring(0, 11)
+
+            var time = stringDate.substring(12, 20)
+
+            holder?.view.date_tv.text = date
+            holder?.view.time_tv.text = time
             holder?.view.temperature_tv.text = currentWeatherData.main.temp.toString() + "°C"
 
             Glide.with(holder?.view.context)
                 .load("https://openweathermap.org/img/wn/" + currentWeatherData.weather[0].icon + "@2x.png")
-                .into( holder?.view.temp_icon)
+                .into(holder?.view.temp_icon)
 
         }
 
@@ -48,67 +67,95 @@ class WeatherAdapter(private val currentWeatherList: ArrayList<WeatherModel>):Re
     }
 
     override fun getItemCount(): Int {
-        return currentWeatherList.size
+        return currentWeatherFilteredList.size
     }
 
 
     private fun epochToIso8601(time: Long): String {
-        val format = "dd MMM yyyy HH:mm:ss" // you can add the format you need
+        val format = "dd MMM yyyy HH:mm aa" // you can add the format you need
         val sdf = SimpleDateFormat(format, Locale.getDefault()) // default local
         sdf.timeZone = TimeZone.getDefault() // set anytime zone you need
         return sdf.format(Date(time * 1000))
     }
 
-}
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+
+                val charSearch = constraint.toString()
+
+                if (charSearch.isEmpty()) {
+
+                    currentWeatherFilteredList = currentWeatherList
+
+                } else {
 
 
+                    var resultList = ArrayList<WeatherModel>()
+                    for (row in currentWeatherList) {
+                        if (row.name.toLowerCase()
+                                .contains(charSearch.toLowerCase())
+                        ) {
 
+                            resultList.add(row)
+                        }
 
-class CurrentWeatherVH(val view: View, var currentWeather: WeatherModel? = null):RecyclerView.ViewHolder(view) {
+                    }
 
-    companion object {
-        val TEN_MAJOR_NUMBER = "TEN_MAJOR_NUMBER"
-        val TEN_MAJOR_TITLE = "TEN_MAJOR_TITLE"
-        val TEN_MAJOR_LYRIC = "TEN_MAJOR_LYRIC"
+                    currentWeatherFilteredList = resultList
+
+                }
+
+                val filterResults = FilterResults()
+                filterResults.values = currentWeatherFilteredList
+                return filterResults
+            }
+
+            override fun publishResults(p0: CharSequence?, results: FilterResults?) {
+                currentWeatherFilteredList = results?.values as ArrayList<WeatherModel>
+
+                notifyDataSetChanged()
+            }
+        }
 
     }
 
-    init {
-        view.setOnClickListener {
+}
 
-//            val context = view.context
+class CurrentWeatherVH(val view: View, var currentWeather: WeatherModel? = null) :
+    RecyclerView.ViewHolder(view) {
+
+    init {
+
+        view.setOnClickListener {
+            val context = view.context
+
+//            val intent = Intent(context, PraisesAndWorshipDetails::class.java).apply{
 //
-//            val intent = Intent(context, GodTenMajorDetails::class.java).apply {
 //
 //                Toast.makeText(context,
-//                    tenMajorSongs?.tenMajorTitle,
+//                    praisesAndWorshipSongs?.praisesTitle,
 //                    Toast.LENGTH_LONG).show()
 //
 //
-//                putExtra("TENMAJORNUMBER", tenMajorSongs?.tenMajorNumber)
-//                putExtra("TENMAJORTITLE", tenMajorSongs?.tenMajorTitle)
-//                putExtra("TENMAJORLYRIC", tenMajorSongs?.tenMajorLyric)
+//                //send data using intent
+//                putExtra("PRAISESNUMBER", praisesAndWorshipSongs?.praisesNumber)
+//                putExtra("PRAISESTITLE", praisesAndWorshipSongs?.praisesTitle)
+//                putExtra("PRAISESLYRIC", praisesAndWorshipSongs?.praisesLyric)
+//
+//
+//
+//            }
 
-
-//              putExtra(TEN_MAJOR_NUMBER, tenMajorSongs?.tenMajorNumber)
-//              putExtra(TEN_MAJOR_TITLE, tenMajorSongs?.tenMajorTitle)
-//              putExtra(TEN_MAJOR_LYRIC, tenMajorSongs?.tenMajorNumber)
-
-            }
-
-//            context.startActivity(intent)
+            // context.startActivity(intent)
 
 
         }
-
-    class WeatherComparator: DiffUtil.ItemCallback<WeatherModel>(){
-        override fun areItemsTheSame(oldItem: WeatherModel, newItem: WeatherModel) =
-            oldItem.id == newItem.id
-
-        override fun areContentsTheSame(oldItem: WeatherModel, newItem: WeatherModel) =
-            oldItem == newItem
-
     }
 
-
 }
+
+
+
+
