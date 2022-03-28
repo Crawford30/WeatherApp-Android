@@ -1,12 +1,15 @@
 package com.example.weatherapp.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.weatherapp.DetailActivity
 import com.example.weatherapp.R
 import com.example.weatherapp.models.weathermodel.WeatherModel
 import kotlinx.android.synthetic.main.layout_weather_row.view.*
@@ -16,7 +19,7 @@ import java.util.*
 
 
 class WeatherAdapter(
-    var currentWeatherList: ArrayList<WeatherModel>
+    var currentWeatherList: ArrayList<WeatherModel>,
 ) :
     RecyclerView.Adapter<CurrentWeatherVH>(), Filterable {
 
@@ -89,7 +92,7 @@ class WeatherAdapter(
 
                     var resultList = ArrayList<WeatherModel>()
                     for (row in currentWeatherList) {
-                        if (row.name.lowercase(Locale.getDefault())
+                        if (row.name!!.lowercase(Locale.getDefault())
                                 .contains(charSearch.lowercase(Locale.getDefault()))
                         ) {
 
@@ -125,7 +128,16 @@ class CurrentWeatherVH(val view: View, var currentWeatherItem: WeatherModel? = n
         view.setOnClickListener {
 
             val context = view.context
+            val intent = Intent(context, DetailActivity::class.java).apply {
+                putExtra("CITYNAME", currentWeatherItem?.name)
+                putExtra("STATUS", currentWeatherItem!!.weather[0].main)
+                putExtra("MINTEMP", currentWeatherItem!!.main.tempMin.toString())
+                putExtra("MAXTEMP", currentWeatherItem!!.main.tempMax.toString())
+                putExtra("TEMP", currentWeatherItem!!.main.temp.toString())
 
+            }
+
+            context.startActivity(intent)
 
         }
 

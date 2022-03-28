@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.16145833333333334" />
+        <entry key="app/src/main/res/drawable/ic_back.xml" value="0.1296875" />
         <entry key="app/src/main/res/drawable/ic_baseline_favorite.xml" value="0.21296296296296297" />
         <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.16145833333333334" />
         <entry key="app/src/main/res/drawable/ic_done.xml" value="0.20277777777777778" />
@@ -11,6 +12,7 @@
         <entry key="app/src/main/res/drawable/note_button_bg_layout.xml" value="0.16145833333333334" />
         <entry key="app/src/main/res/drawable/note_text_bg_layout.xml" value="0.16145833333333334" />
         <entry key="app/src/main/res/drawable/note_text_cursor_color.xml" value="0.16145833333333334" />
+        <entry key="app/src/main/res/layout/activity_detail.xml" value="0.1621376811594203" />
         <entry key="app/src/main/res/layout/current_weather_fragment.xml" value="0.11068895643363728" />
         <entry key="app/src/main/res/layout/favorite_fragment.xml" value="0.16576086956521738" />
         <entry key="app/src/main/res/layout/fragment_new_note.xml" value="0.14175724637681159" />
