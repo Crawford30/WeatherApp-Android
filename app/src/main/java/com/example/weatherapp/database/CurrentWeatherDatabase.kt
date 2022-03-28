@@ -7,7 +7,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.weatherapp.models.WeatherModel
+import com.example.weatherapp.database.Dao.CurrentWeatherDao
+import com.example.weatherapp.models.weathermodel.WeatherModel
 import com.example.weatherapp.utils.ListConverters
 import com.example.weatherapp.utils.StringConverters
 

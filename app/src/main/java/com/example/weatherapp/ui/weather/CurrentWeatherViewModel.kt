@@ -1,13 +1,8 @@
 package com.example.weatherapp.ui.weather
 
-import android.app.Application
 import androidx.lifecycle.*
-import com.example.weatherapp.ApiInterface
-import com.example.weatherapp.models.WeatherModel
+import com.example.weatherapp.models.weathermodel.WeatherModel
 import com.example.weatherapp.repository.CurrentWeatherRepository
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class CurrentWeatherViewModel constructor(private val repository: CurrentWeatherRepository) : ViewModel() {

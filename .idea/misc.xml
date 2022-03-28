@@ -3,9 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_add.xml" value="0.16145833333333334" />
         <entry key="app/src/main/res/drawable/ic_baseline_favorite.xml" value="0.21296296296296297" />
+        <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.16145833333333334" />
+        <entry key="app/src/main/res/drawable/ic_done.xml" value="0.20277777777777778" />
+        <entry key="app/src/main/res/drawable/note_bg_layout.xml" value="0.16145833333333334" />
+        <entry key="app/src/main/res/drawable/note_button_bg_layout.xml" value="0.16145833333333334" />
+        <entry key="app/src/main/res/drawable/note_text_bg_layout.xml" value="0.16145833333333334" />
+        <entry key="app/src/main/res/drawable/note_text_cursor_color.xml" value="0.16145833333333334" />
         <entry key="app/src/main/res/layout/current_weather_fragment.xml" value="0.11068895643363728" />
+        <entry key="app/src/main/res/layout/favorite_fragment.xml" value="0.16576086956521738" />
+        <entry key="app/src/main/res/layout/fragment_new_note.xml" value="0.14175724637681159" />
+        <entry key="app/src/main/res/layout/fragment_update_note.xml" value="0.13722826086956522" />
         <entry key="app/src/main/res/layout/layout_weather_row.xml" value="0.14791666666666667" />
+        <entry key="app/src/main/res/layout/note_layout_adapter.xml" value="0.12708333333333333" />
+        <entry key="app/src/main/res/layout/notes_fragment.xml" value="0.1453125" />
+        <entry key="app/src/main/res/layout/notes_row.xml" value="0.1453125" />
+        <entry key="app/src/main/res/menu/home_menu.xml" value="0.20729166666666668" />
+        <entry key="app/src/main/res/menu/menu_new_note.xml" value="0.17777777777777778" />
+        <entry key="app/src/main/res/menu/menu_notes.xml" value="0.1453125" />
+        <entry key="app/src/main/res/menu/menu_update_note.xml" value="0.2171875" />
       </map>
     </option>
   </component>

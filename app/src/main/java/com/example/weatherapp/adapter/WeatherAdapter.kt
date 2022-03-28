@@ -8,7 +8,7 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.weatherapp.R
-import com.example.weatherapp.models.WeatherModel
+import com.example.weatherapp.models.weathermodel.WeatherModel
 import kotlinx.android.synthetic.main.layout_weather_row.view.*
 import kotlin.collections.ArrayList
 import com.example.weatherapp.utils.epochToIso8601

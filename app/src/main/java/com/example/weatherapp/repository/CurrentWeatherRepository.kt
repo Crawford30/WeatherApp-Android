@@ -1,8 +1,7 @@
 package com.example.weatherapp.repository
 
-import androidx.lifecycle.LiveData
-import com.example.weatherapp.database.CurrentWeatherDao
-import com.example.weatherapp.models.WeatherModel
+import com.example.weatherapp.database.Dao.CurrentWeatherDao
+import com.example.weatherapp.models.weathermodel.WeatherModel
 import kotlinx.coroutines.flow.Flow
 
 

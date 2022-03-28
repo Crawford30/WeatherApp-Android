@@ -19,5 +19,55 @@
         android:id="@+id/noteFragment"
         android:name="com.example.weatherapp.ui.notes.NotesFragment"
         android:label="Notes"
-        tools:layout="@layout/notes_fragment" />
+        tools:layout="@layout/notes_fragment">
+
+        <action
+            android:id="@+id/action_homeFragment_to_newNoteFragment"
+            app:destination="@id/newNoteFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_updateNoteFragment"
+            app:destination="@id/updateNoteFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/newNoteFragment"
+        android:name="com.example.weatherapp.ui.notes.NewNoteFragment"
+        android:label="New Note"
+        tools:layout="@layout/fragment_new_note">
+        <action
+            android:id="@+id/action_newNoteFragment_to_homeFragment"
+            app:destination="@id/noteFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/updateNoteFragment"
+        android:name="com.example.weatherapp.ui.notes.UpdateNoteFragment"
+        android:label="Update Note"
+        tools:layout="@layout/fragment_update_note">
+        <action
+            android:id="@+id/action_updateNoteFragment_to_homeFragment"
+            app:destination="@id/noteFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="note"
+            app:argType="com.example.weatherapp.models.notemodel.Note"
+            app:nullable="true" />
+    </fragment>
 </navigation>

@@ -1,9 +1,8 @@
 package com.example.weatherapp
 
 import android.util.Log
-import com.example.weatherapp.models.WeatherModel
+import com.example.weatherapp.models.weathermodel.WeatherModel
 import com.example.weatherapp.network.ConnectivityInterceptor
-import com.example.weatherapp.network.ConnectivityInterceptorImpl
 import com.example.weatherapp.utils.API_KEY
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred

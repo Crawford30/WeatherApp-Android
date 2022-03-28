@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
@@ -15,7 +14,7 @@ import com.example.weatherapp.ApiInterface
 
 import com.example.weatherapp.adapter.WeatherAdapter
 import com.example.weatherapp.database.CurrentWeatherDatabase
-import com.example.weatherapp.models.WeatherModel
+import com.example.weatherapp.models.weathermodel.WeatherModel
 import com.example.weatherapp.network.ConnectivityInterceptorImpl
 import com.example.weatherapp.utils.NoConnectivityException
 import com.example.weatherapp.utils.nameOfCities
